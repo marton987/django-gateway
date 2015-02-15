@@ -6,6 +6,12 @@ venv
 # Django files
 db.sqlite3
 
+# CSS Files and Sass cache
+.sass-cache
+*.css
+css/
+bower_components/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
