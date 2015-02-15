@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-    <title>Starter Template - Materialize</title>
+    <title>Django gateway - {% block title %}{% endblock %}</title>
 
     <!-- CSS  -->
     <link type="text/css" rel="stylesheet" href="{% static 'bower_components/materialize/dist/css/materialize.min.css' %}"  media="screen,projection"/>
@@ -20,6 +20,8 @@
     {% block banner %}{% endblock %}
 
     {% block content %}{% endblock %}
+
+    {% block action_button %}{% endblock %}
     
     {% block footer %}{% include 'footer.html' %}{% endblock %}
 
