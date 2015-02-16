@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br><br>
+<div class="row">
+  <div class="col s12 m6 offset-m3">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title grey-text">Details of payment: "{{ object.merchant_id }}"</span>
+        <div class="row">
+          <div class="col s10 m4 offset-m6"><span class="flow-text">Amount: ${{ transaction.amount }}</span></div>
+          <div class="col s2 m2">
+            <img src="{{ transaction.credit_card.image_url }}" alt="{{ transaction.credit_card.card_type }}">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12 m12"><b>Cardholder name:</b> {{ transaction.credit_card.cardholder_name }} </div>
+          <div class="col s12 m12">
+            <b>Credit card number:</b> 
+            {{ transaction.credit_card.bin }}** **** **** {{ transaction.credit_card.last_4 }} 
+          </div>
+          <div class="col s6 m4">
+            <b>Expiration date:</b>
+            {{ transaction.credit_card.expiration_month }}/{{ transaction.credit_card.expiration_year }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12 m6"><span class="flow-text">Status: {{ object.status|title }}</span></div>
+          <div class="col s12 m6"><span class="flow-text">{{ object.timestamp }}</span></div>
+        </div>
+      </div>
+      <div class="card-action right-align">
+        <a href="{% url 'payments' %}">View my payments</a>
+      </div>
+    </div>
+  </div>
+</div>
+<br><br>
+{% endblock content %}

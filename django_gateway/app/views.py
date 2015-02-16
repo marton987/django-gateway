@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic import TemplateView, FormView, ListView
+from django.views.generic import TemplateView, FormView, ListView, DetailView
 from app.gateway import get_gateway, TransactionProblem
 
 
@@ -34,7 +34,25 @@ class PaymentListView(ListView):
     model = MerchantTransaction
     paginate_by = 10
     template_name = 'payments_list.html'
+
+
+class PaymentDetailView(DetailView):
+
+    """ List of payments made by the user """
+    model = MerchantTransaction
+    slug_field = 'merchant_id'
+    slug_url_kwarg = 'merchant_id'
+    template_name = 'payment_detail.html'
     
+    def get_context_data(self, **kwargs):
+        context = super(PaymentDetailView, self).get_context_data(**kwargs)
+
+        merchant = get_gateway("braintree_payments")
+        transaction = merchant.find_transaction(self.object.merchant_id)
+        context['transaction'] = transaction
+
+        return context
+
 
 class PaymentFormView(FormView):
 

@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load staticfiles %}
 
 {% block content %}
 <br><br>
@@ -18,7 +17,11 @@
         <tbody>
         {% for transaction in object_list %}
         <tr>
-          <td><a href="#">{{ transaction.merchant_id }}</a></td>
+          <td>
+            <a href="{% url 'payment_detail' transaction.merchant_id %}">
+              {{ transaction.merchant_id }}
+            </a>
+          </td>
           <td>{{ transaction.status|title }}</td>
           <td>${{ transaction.amount }}</td>
           <td>{{ transaction.timestamp }}</td>

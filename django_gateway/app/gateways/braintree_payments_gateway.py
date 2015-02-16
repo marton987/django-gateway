@@ -25,6 +25,14 @@ class BraintreePaymentsGateway(Gateway):
             braintree_settings['PRIVATE_KEY']
         )
 
+    def find_transaction(self, transaction_id):
+        """
+        Find a transaction, given a transaction_id. This does not return
+        a result object. This will raise a :class:`NotFoundError <braintree.exceptions.not_found_error.NotFoundError>` if the provided
+        credit_card_id is not found. ::
+        """
+        return braintree.Transaction.find(transaction_id)
+
     def create_transaction(self, user, cardholder_name, amount, number,
                            month, year, cvv):
         """
