@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<br><br>
+<div class="row">
+  <div class="col s12 m6 offset-m3">
+    <h1>List my payments</h1>
+    <table class="responsive-table hoverable">
+      <thead>
+        <tr>
+            <th data-field="id">Transaction id</th>
+            <th data-field="status">Status</th>
+            <th data-field="amount">Amount</th>
+            <th data-field="date">Date</th>
+        </tr>
+      </thead>
+        <tbody>
+        {% for transaction in object_list %}
+        <tr>
+          <td><a href="#">{{ transaction.merchant_id }}</a></td>
+          <td>{{ transaction.status|title }}</td>
+          <td>${{ transaction.amount }}</td>
+          <td>{{ transaction.timestamp }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No transactions yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<br><br>
+{% if is_paginated %}
+<div class="row">
+  <div class="col s12 m6 offset-m3 right-align">
+    <div class="pagination">
+      <span class="page-links">
+        {% if page_obj.has_previous %}
+          <a href="{% url 'payments' %}?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+        <span class="page-current">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+        {% if page_obj.has_next %}
+          <a href="{% url 'payments' %}?page={{ page_obj.next_page_number }}">Next</a>
+        {% endif %}
+      </span>
+    </div>
+  </div>
+</div>
+{% endif %}
+<br><br>
+{% endblock content %}

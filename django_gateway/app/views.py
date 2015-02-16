@@ -1,9 +1,10 @@
 from app.forms import PaymentForm
+from app.models import MerchantTransaction
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, ListView
 from app.gateway import get_gateway, TransactionProblem
 
 
@@ -27,7 +28,15 @@ class LoginView(SuccessMessageMixin, FormView):
         return super(LoginView, self).form_valid(form)
 
 
-class PaymentView(FormView):
+class PaymentListView(ListView):
+
+    """ List of payments made by the user """
+    model = MerchantTransaction
+    paginate_by = 10
+    template_name = 'payments_list.html'
+    
+
+class PaymentFormView(FormView):
 
     """ Form to process the payment from the user """
     form_class = PaymentForm
@@ -57,4 +66,4 @@ class PaymentView(FormView):
         except TransactionProblem:
             messages.error(self.request, 'We had a problem with your transaction')
 
-        return super(PaymentView, self).form_valid(form)
+        return super(PaymentFormView, self).form_valid(form)

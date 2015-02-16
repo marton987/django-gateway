@@ -24,6 +24,7 @@ class MerchantTransaction(models.Model):
     )
     merchant_id = models.CharField(max_length = 20, verbose_name="Merchant id")
     user = models.ForeignKey(User, verbose_name="User")
+    amount = models.DecimalField(max_digits=16, decimal_places=2)
     gateway = models.CharField(max_length = 10, choices=GATEWAY_CHOICE, verbose_name="Gateway")
     status = models.CharField(max_length = 10, choices=TRANSACTION_STATUS_CHOICE, verbose_name="Status")
     message = models.TextField(blank=True, null=True, verbose_name="Message")

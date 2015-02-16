@@ -45,6 +45,7 @@ class BraintreePaymentsGateway(Gateway):
             transaction = MerchantTransaction.objects.create(
                 merchant_id=result.transaction.id,
                 user=user,
+                amount=amount,
                 gateway='braintree',
                 status='success',
                 response=result.transaction
@@ -53,6 +54,7 @@ class BraintreePaymentsGateway(Gateway):
             transaction = MerchantTransaction.objects.create(
                 merchant_id=result.transaction.id,
                 user=user,
+                amount=amount,
                 gateway='braintree',
                 status='failure',
                 message=result.message,
