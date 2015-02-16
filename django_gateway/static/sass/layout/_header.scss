@@ -1,0 +1,17 @@
+/* Custom Stylesheet */
+/**
+ * This file have the styles for the header of the page.
+ *
+ * Made By Martin Freytes
+ */
+
+.brand-logo {
+  img {
+    height: 64px;
+    width: 64px;
+    @media #{$medium-and-down} {
+      height: 56px;
+      width: 56px;
+    }
+  }
+}

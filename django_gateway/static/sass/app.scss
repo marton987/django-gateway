@@ -1,4 +1,8 @@
 // @import "materialize";
+@import "../bower_components/materialize/sass/components/prefixer";
+@import "../bower_components/materialize/sass/components/color";
+@import "../bower_components/materialize/sass/components/variables";
 
 // Custom styles
 @import "base/override";
+@import "layout/header";

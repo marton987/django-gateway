@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<br><br>
+<div class="row">
+  <div class="col s12 m8 offset-m2">
+    <div class="card large">
+      <div class="card-image">
+        <img src="{% static 'img/cc-wallet.jpg' %}" alt="Payment form">
+      </div>
+      <div class="card-content">
+        <span class="card-title activator grey-text text-darken-4">Make a payment <i class="mdi-navigation-more-vert right"></i></span>
+      </div>
+      <div class="card-reveal">
+        <span class="card-title grey-text text-darken-4">Make a payment <i class="mdi-navigation-close right"></i></span>
+        <p>Please provide cardholder and credit card information.</p>
+        <form action="" method="post">
+          {% csrf_token %}
+          <div class="row">
+            <div class="input-field col s12 {% if form.errors.cardholder_name %}invalid{% endif %}">
+              <i class="mdi-action-account-circle prefix"></i>
+              {{form.cardholder_name}}
+              <label for="{{form.cardholder_name.auto_id}}">{{form.cardholder_name.label}}</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s8 {% if form.errors.number %}invalid{% endif %}">
+              <i class="mdi-action-credit-card prefix"></i>
+              {{form.number}}
+              <label for="{{form.number.auto_id}}">{{form.number.label}}</label>
+            </div>
+            <div class="input-field col s4 {% if form.errors.amount %}invalid{% endif %}">
+              <i class="mdi-editor-attach-money prefix"></i>
+              {{form.amount}}
+              <label for="{{form.amount.auto_id}}">{{form.amount.label}}</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s5 {% if form.errors.month %}invalid{% endif %}">
+              <i class="mdi-action-event prefix"></i>
+              {{form.month}}
+              <label for="{{form.month.auto_id}}">{{form.month.label}}</label>
+            </div>
+            <div class="input-field col s4 {% if form.errors.year %}invalid{% endif %}">
+              <i class="mdi-action-event prefix"></i>
+              {{form.year}}
+              <label for="{{form.year.auto_id}}">{{form.year.label}}</label>
+            </div>
+            <div class="input-field col s3 {% if form.errors.cvv %}invalid{% endif %}">
+              <i class="mdi-communication-vpn-key prefix"></i>
+              {{form.cvv}}
+              <label for="{{form.cvv.auto_id}}">{{form.cvv.label}}</label>
+            </div>
+          </div>
+          <div class="card-action right-align">
+            <button class="btn waves-effect waves-light light-blue" type="submit" name="action">Process Payment
+              <i class="mdi-content-send right"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<br><br>
+{% endblock content %}
+
+{% block action_button %}{% endblock %}

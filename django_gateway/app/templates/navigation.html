@@ -1,6 +1,10 @@
+{% load staticfiles %}
 <nav class="light-blue lighten-1" role="navigation">
   <div class="container">
-    <div class="nav-wrapper"><a id="logo-container" href="#" class="brand-logo">Logo</a>
+    <div class="nav-wrapper">
+      <a id="logo-container" href="/" class="brand-logo">
+        <img src="{% static 'img/django-payment.png' %}" alt="Logo">
+      </a>
       <ul class="right hide-on-med-and-down">
         {% if user.is_authenticated %}
         <li><a href="#"><i class="mdi-action-account-circle left"></i>User profile</a></li>
