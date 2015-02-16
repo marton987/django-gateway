@@ -28,6 +28,14 @@ class LoginView(SuccessMessageMixin, FormView):
         return super(LoginView, self).form_valid(form)
 
 
+class DashboardListView(ListView):
+
+    """ List of payments made by all the users """
+    model = MerchantTransaction
+    paginate_by = 2
+    template_name = 'dashboard.html'
+
+
 class PaymentListView(ListView):
 
     """ List of payments made by the user """
