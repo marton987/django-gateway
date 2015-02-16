@@ -10,17 +10,17 @@
   padding: 0 15px;
 }
 /* invalid color */
-.input-field, .invalid {
-  input[type=text],
-  input[type=password],
-  input[type=email],
-  input[type=url],
-  input[type=date],
-  input[type=tel],
-  input[type=number],
-  input[type=search],
-  textarea.materialize-textarea {
-    border-bottom: 1px solid $input-error-color;
-    @include box-shadow(0 1px 0 0 $input-error-color);
-  }
-}
+// .input-field, .invalid {
+//   input[type=text],
+//   input[type=password],
+//   input[type=email],
+//   input[type=url],
+//   input[type=date],
+//   input[type=tel],
+//   input[type=number],
+//   input[type=search],
+//   textarea.materialize-textarea {
+//     border-bottom: 1px solid $input-error-color;
+//     @include box-shadow(0 1px 0 0 $input-error-color);
+//   }
+// }

@@ -1,0 +1,7 @@
+{% if messages %}
+<script type="text/javascript">
+  {% for message in messages %}
+    toast('{{ message }}', 4000)
+  {% endfor %}
+</script>
+{% endif %}

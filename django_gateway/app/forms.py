@@ -2,6 +2,7 @@ from django import forms
 
 
 class PaymentForm(forms.Form):
+
     """ Form that process the payment of the user """
     cardholder_name = forms.CharField(label="Cardholder Name", max_length=100)
     amount = forms.DecimalField(label="Amount")

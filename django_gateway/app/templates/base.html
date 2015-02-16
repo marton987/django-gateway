@@ -5,6 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="theme-color" content="#29B6F6" />
+    <link rel="shortcut icon" href="{% static 'img/django-payment.png' %}" type="image/x-icon">
     <title>Django gateway - {% block title %}{% endblock %}</title>
 
     <!-- CSS  -->
@@ -29,6 +31,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="{% static 'bower_components/materialize/dist/js/materialize.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/init.js' %}"></script>
+    {% block toasts %}{% include 'toasts.html' %}{% endblock %}
     {% block extra_foot %}{% endblock %}
 
   </body>
