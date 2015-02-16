@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'braintree',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -85,3 +86,14 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+# Merchant Settings
+
+MERCHANT_TEST_MODE = True
+MERCHANT_SETTINGS = {
+    "braintree_payments": {
+        "MERCHANT_ACCOUNT_ID": "8c6hxmn8hbth7ks7",
+        "PUBLIC_KEY": "4jx7pgbhhn5x92kv",
+        "PRIVATE_KEY": "871e6cb31b9956cbe484a456da85203f"
+    }
+}
