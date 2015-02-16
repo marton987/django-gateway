@@ -1,10 +1,18 @@
-from django.views.generic import TemplateView
-
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
+from django.views.generic import TemplateView, FormView
 
 class IndexView(TemplateView):
     """ Index page of the application """
     template_name = 'index.html'
 
-    # @method_decorator(ensure_csrf_cookie)
-    # def dispatch(self, *args, **kwargs):
-    #     return super(IndexView, self).dispatch(*args, **kwargs)
+class LoginView(FormView):
+    """ Login of the application """
+    form_class = AuthenticationForm
+    template_name = 'login.html'
+    success_url = '/'
+
+    def form_valid(self, form):
+        login(self.request, form.get_user())
+
+        return super(LoginView, self).form_valid(form)
