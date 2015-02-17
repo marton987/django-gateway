@@ -7,7 +7,7 @@
       </a>
       <ul class="right hide-on-med-and-down">
         {% if user.is_authenticated %}
-        <li><a href="#"><i class="mdi-action-account-circle left"></i>User profile</a></li>
+        <li><a href="{% url 'profile' %}"><i class="mdi-action-account-circle left"></i>User profile</a></li>
         <li><a href="{% url 'payments' %}"><i class="mdi-action-list left"></i>List transactions</a></li>
         <!-- <li><a href="#"><i class="mdi-action-credit-card left"></i>Credit Cards</a></li> -->
         <li><a href="{% url 'logout' %}">Logout</a></li>
@@ -18,7 +18,7 @@
 
       <ul id="nav-mobile" class="side-nav">
         {% if user.is_authenticated %}
-        <li><a href="#"><i class="mdi-action-account-circle left"></i>User profile</a></li>
+        <li><a href="{% url 'profile' %}"><i class="mdi-action-account-circle left"></i>User profile</a></li>
         <li><a href="{% url 'payments' %}"><i class="mdi-action-list left"></i>List transactions</a></li>
         <!-- <li><a href="#"><i class="mdi-action-credit-card left"></i>Credit Cards</a></li> -->
         <li><a href="{% url 'logout' %}">Logout</a></li>

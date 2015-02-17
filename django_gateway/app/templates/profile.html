@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br><br>
+<div class="row">
+  <div class="card col s12 m6 offset-m3">
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">Edit user</span>
+      <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="right-align">
+          <button class="btn waves-effect waves-light light-blue" type="submit" name="action">Submit
+            <i class="mdi-content-send right"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<br><br>
+{% endblock content %}

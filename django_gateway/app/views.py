@@ -1,11 +1,13 @@
-from app.forms import PaymentForm
+from app.forms import PaymentForm, UserForm
 from app.models import MerchantTransaction
 from django.contrib import messages
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic import TemplateView, FormView, ListView, DetailView
+from django.views.generic import (TemplateView, FormView, ListView, DetailView,
+    UpdateView)
 from app.gateway import get_gateway, TransactionProblem
 
 
@@ -27,6 +29,19 @@ class LoginView(SuccessMessageMixin, FormView):
         login(self.request, form.get_user())
 
         return super(LoginView, self).form_valid(form)
+
+
+class EditUserView(SuccessMessageMixin, UpdateView):
+    
+    """ Form to edit the user """
+    model = User
+    form_class = UserForm
+    template_name = "profile.html"
+    success_url = '/'
+    success_message = 'User updated'
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 class DashboardListView(ListView):
@@ -89,7 +104,7 @@ class PaymentFormView(FormView):
     """ Form to process the payment from the user """
     form_class = PaymentForm
     template_name = 'payment_form.html'
-    success_url = '/'
+    success_url = '/payments'
 
     def form_valid(self, form):
         merchant = get_gateway("braintree_payments")
