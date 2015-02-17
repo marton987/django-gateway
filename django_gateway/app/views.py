@@ -1,6 +1,7 @@
 from app.forms import PaymentForm
 from app.models import MerchantTransaction
 from django.contrib import messages
+from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.messages.views import SuccessMessageMixin
@@ -32,8 +33,28 @@ class DashboardListView(ListView):
 
     """ List of payments made by all the users """
     model = MerchantTransaction
-    paginate_by = 2
+    paginate_by = 10
     template_name = 'dashboard.html'
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+
+        if self.request.is_ajax():
+            return self.json_to_response()
+
+        context = self.get_context_data()
+        return self.render_to_response(context)
+
+    def json_to_response(self):
+        data = [{
+            'transaction_id': payment.merchant_id,
+            'user': payment.user.username,
+            'amount': payment.amount,
+            'status': payment.status,
+            'timestamp': payment.timestamp.strftime('%Y-%m-%d'),
+        } for payment in self.object_list]
+
+        return JsonResponse(data, safe=False)
 
 
 class PaymentListView(ListView):

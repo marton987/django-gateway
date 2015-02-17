@@ -1,40 +1,51 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block extra_head %}
+<link type="text/css" rel="stylesheet" href="{% static 'bower_components/chartist/dist/chartist.min.css' %}" media="screen,projection"/>
+{% endblock extra_head %}
 
 {% block content %}
 <br><br>
 <div class="row">
-  <div class="col s12 m6 offset-m3">
-    <h1>List my payments</h1>
-    <table class="responsive-table hoverable">
-      <thead>
-        <tr>
-            <th data-field="id">Transaction id</th>
-            <th data-field="username">Username</th>
-            <th data-field="names">Names</th>
-            <th data-field="status">Status</th>
-            <th data-field="amount">Amount</th>
-            <th data-field="date">Date</th>
-        </tr>
-      </thead>
-        <tbody>
-        {% for transaction in object_list %}
-        <tr>
-          <td>
-            <a href="{% url 'payment_detail' transaction.merchant_id %}">
-              {{ transaction.merchant_id }}
-            </a>
-          </td>
-          <td>{{ transaction.user }}</td>
-          <td>{{ transaction.user.get_full_name }}</td>
-          <td>{{ transaction.status|title }}</td>
-          <td>${{ transaction.amount }}</td>
-          <td>{{ transaction.timestamp }}</td>
-        </tr>
-        {% empty %}
-        <tr><td colspan="6">No transactions yet.</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
+  <div class="card col s12 m6 offset-m3">
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">List all payments <i class="mdi-navigation-more-vert right"></i></span>
+      <table class="responsive-table hoverable">
+        <thead>
+          <tr>
+              <th data-field="id">Transaction id</th>
+              <th data-field="username">Username</th>
+              <th data-field="names">Names</th>
+              <th data-field="status">Status</th>
+              <th data-field="amount">Amount</th>
+              <th data-field="date">Date</th>
+          </tr>
+        </thead>
+          <tbody>
+          {% for transaction in object_list %}
+          <tr>
+            <td>
+              <a href="{% url 'payment_detail' transaction.merchant_id %}">
+                {{ transaction.merchant_id }}
+              </a>
+            </td>
+            <td>{{ transaction.user }}</td>
+            <td>{{ transaction.user.get_full_name }}</td>
+            <td>{{ transaction.status|title }}</td>
+            <td>${{ transaction.amount }}</td>
+            <td>{{ transaction.timestamp }}</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="6">No transactions yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">Filter results <i class="mdi-navigation-close right"></i></span>
+      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+    </div>
   </div>
 </div>
 <br><br>
@@ -58,4 +69,106 @@
 </div>
 {% endif %}
 <br><br>
+<div class="row">
+  <div class="col s12 m4 offset-m2">
+    <h4>Days vs. Payments</h4>
+    <div id="dates-chart" class="ct-chart ct-perfect-fourth"></div>
+  </div>
+  <div class="col s12 m4">
+    <h4>Users vs. Payments</h4>
+    <div id="users-chart" class="ct-chart ct-perfect-fourth"></div>
+  </div>
+</div>
+<br><br>
 {% endblock content %}
+
+{% block extra_foot %}
+<script type="text/javascript" src="{% static 'bower_components/chartist/dist/chartist.min.js' %}"></script>
+<script type="text/javascript">
+var dates = [], 
+    users = [], 
+    amountByUser = {}, 
+    amountByDate = {};
+
+$.getJSON( "", function( data ) {
+  $.each(data, function() {
+    dates.push( this.timestamp );
+    users.push( this.user );
+  });
+  dates = $.unique(dates);
+  users = $.unique(users);
+
+  amountByDate = amountByParameter( dates, "timestamp" );
+  amountByUser = amountByParameter( users, "user" );
+  
+  function amountByParameter ( set, compare ) {
+    var results = {};
+    $.each(set, function( ) {
+      var elem = this,
+          aux = 0;
+
+      $.each(data, function( ) {
+        if ( this[compare] == elem ) {
+          aux += parseFloat(this.amount);
+        }
+      });
+      results[elem] = aux;
+    });
+
+    return results;
+  };
+
+  var datesLabels = [],
+      datesData = [],
+      usersLabels = [],
+      usersData = [];
+  $.each(amountByDate, function ( key, val ) { datesLabels.push(key); datesData.push(val) });
+  $.each(amountByUser, function ( key, val ) { usersLabels.push(key); usersData.push(val) });
+
+
+  /* Add a basic data series with six labels and values */
+  var data = {
+    labels: datesLabels,
+    series: [
+      {
+        data: datesData
+      }
+    ]
+  };
+
+  /* Set some base options (settings will override the default settings in Chartist.js *see default settings*). We are adding a basic label interpolation function for the xAxis labels. */
+  var options = {
+    low: 0,
+    showArea: true,
+    axisX: {
+      labelInterpolationFnc: function(value) {
+        return value;
+      }
+    }
+  };
+
+  /* Initialize the chart with the above settings */
+  new Chartist.Line('#dates-chart', data, options);
+
+   /* Add a basic data series with six labels and values */
+  var data = {
+    labels: usersLabels,
+    series: [
+      {
+        data: usersData
+      }
+    ]
+  };
+
+  /* Set some base options (settings will override the default settings in Chartist.js *see default settings*). We are adding a basic label interpolation function for the xAxis labels. */
+  var options = {
+    seriesBarDistance: 10
+  };
+
+  /* Initialize the chart with the above settings */
+  new Chartist.Bar('#users-chart', data, options);
+
+});
+
+</script>
+{% endblock extra_foot %}
