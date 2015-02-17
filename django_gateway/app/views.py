@@ -34,6 +34,7 @@ class DashboardListView(ListView):
     """ List of payments made by all the users """
     model = MerchantTransaction
     paginate_by = 10
+    queryset = MerchantTransaction.objects.filter(status="success")
     template_name = 'dashboard.html'
 
     def get(self, request, *args, **kwargs):
