@@ -54,6 +54,23 @@
     `(vagrant)(venv)/vagrant$ cd django_gateway`  
     `(vagrant)(venv)/vagrant/django_gateway$ python manage.py migrate`
 
+13. Install NodeJS
+    `$ curl -sL https://deb.nodesource.com/setup | sudo bash -`
+    `$ sudo apt-get install -y nodejs`
+
+14. Install bower and git
+    `$ sudo npm install -g bower`
+    `$ sudo apt-get install git`
+
+15. Install Ruby Gems and Compass
+    `$ sudo apt-get install ruby1.9.3`
+    `$ sudo gem install compass`
+
+16. Create static files
+    `(vagrant)(venv)/vagrant/django_gateway$ cd static/`
+    `(vagrant)(venv)/vagrant/django_gateway/static$ bower install`
+    `(vagrant)(venv)/vagrant/django_gateway/static$ compass compile`
+
 ##Notes
 
 
