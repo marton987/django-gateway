@@ -40,6 +40,7 @@ class Gateway(object):
     # Application name or some unique identifier for the gateway.
     application_id = ""
 
+
 def get_gateway(gateway, *args, **kwargs):
     """
     Return a gateway instance specified by `gateway` name.

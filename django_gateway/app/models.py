@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Gateway classes
 GATEWAY_CHOICE = (
     ('braintree', 'Braintree Payments'),
     ('paypal', 'PayPal'),
@@ -33,7 +32,6 @@ class MerchantTransaction(models.Model):
 
     def __unicode__(self):
         return self.merchant_id
-
 
     class Meta:
         verbose_name = "Merchant transaction"

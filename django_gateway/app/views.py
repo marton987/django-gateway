@@ -6,8 +6,13 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic import (TemplateView, FormView, ListView, DetailView,
-    UpdateView)
+from django.views.generic import (
+    TemplateView,
+    FormView,
+    ListView,
+    DetailView,
+    UpdateView
+)
 from app.gateway import get_gateway, TransactionProblem
 
 
